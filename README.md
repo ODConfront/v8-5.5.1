@@ -13,25 +13,31 @@ V8 can run standalone, or can be embedded into any C++ application.
 V8 Project page: https://github.com/v8/v8/wiki
 
 
-Getting the Code
+Getting The Dependencies
 =============
 
 Checkout [depot tools](http://www.chromium.org/developers/how-tos/install-depot-tools), and run
 
-        fetch v8
+After adding depot_tools to System `PATH`, then rn
 
-This will checkout V8 into the directory `v8` and fetch all of its dependencies.
-To stay up to date, run
+        python download_deps.py
 
-        git pull origin
-        gclient sync
+This will download all dependencies of V8 needed.
 
-For fetching all branches, add the following into your remote
-configuration in `.git/config`:
+Build V8 With GN
+============
 
-        fetch = +refs/branch-heads/*:refs/remotes/branch-heads/*
-        fetch = +refs/tags/*:refs/tags/*
+A **Linux build machine** capable of building V8 for Linux. Other (Mac/Windows) platforms are not supported for Android.
 
+First, generate the necessary build files:
+```
+gn args out.gn/android
+```
+
+
+```
+gn gen out.gn/android --args='is_debug=false target_cpu="arm64" v8_target_cpu="arm64" target_os="android"'
+```
 
 Contributing
 =============
