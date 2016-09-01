@@ -391,9 +391,9 @@
                 'android_lib': '<(android_sysroot)/usr/lib',
               }],
             ],
-            'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
-            'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/armeabi/include',
-            'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
+            'android_libcpp_include': '<(android_stl)/llvm-libc++/libcxx/include',
+            'android_libcpp_abi_include': '<(android_stl)/llvm-libc++abi/libcxxabi/include',
+            'android_libcpp_libs': '<(android_stl)/llvm-libc++/libs',
             'android_support_include': '<(android_toolchain)/sources/android/support/include',
             'android_sysroot': '<(android_sysroot)',
           }, {
@@ -408,15 +408,14 @@
                 'android_lib': '<(android_sysroot)/usr/lib',
               }],
             ],
-            'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
-            'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/armeabi/include',
-            'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
+            'android_libcpp_include': '<(android_stl)/llvm-libc++/libcxx/include',
+            'android_libcpp_abi_include': '<(android_stl)/llvm-libc++abi/libcxxabi/include',
+            'android_libcpp_libs': '<(android_stl)/llvm-libc++/libs',
             'android_support_include': '<(android_ndk_root)/sources/android/support/include',
             'android_sysroot': '<(android_sysroot)',
           }],
         ],
-        'android_libcpp_library': 'gnustl_shared',
-        'android_libcpp_support': 'supc++',
+        'android_libcpp_library': 'c++_static',
       }],  # OS=="android"
       ['host_clang==1', {
         'conditions':[
@@ -1091,7 +1090,7 @@
           ['clang==1', {
             'xcode_settings': {
               'GCC_VERSION': 'com.apple.compilers.llvm.clang.1_0',
-              'CLANG_CXX_LANGUAGE_STANDARD': 'c++14',  # -std=c++11
+              'CLANG_CXX_LANGUAGE_STANDARD': 'c++11',  # -std=c++11
             },
             'conditions': [
               ['clang_xcode==0', {
@@ -1175,12 +1174,10 @@
               ],
               'libraries': [
                 '-l<(android_libcpp_library)',
-                '-l<(android_libcpp_support)',
                 '-latomic',
                 # Manually link the libgcc.a that the cross compiler uses.
                 '<!(<(android_toolchain)/*-gcc -print-libgcc-file-name)',
                 '-lc',
-                '-llog',
                 '-ldl',
                 '-lm',
             ],
@@ -1291,7 +1288,6 @@
           }],  # _toolset=="target"
           # Settings for building host targets using the system toolchain.
           ['_toolset=="host"', {
-            'defines': ['V8_ANDROID_LOG_STDOUT=1'],
             'cflags': [ '-pthread' ],
             'ldflags': [ '-pthread' ],
             'ldflags!': [
@@ -1327,7 +1323,7 @@
     ['clang==0 and host_clang==1 and target_arch!="ia32" and target_arch!="x64"', {
       'target_conditions': [
         ['_toolset=="host"', {
-          'cflags_cc': [ '-std=c++11', ],
+          'cflags_cc': [ '-std=gnu++11', ],
         }],
       ],
       'target_defaults': {
