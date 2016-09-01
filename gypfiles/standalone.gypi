@@ -1090,7 +1090,7 @@
           ['clang==1', {
             'xcode_settings': {
               'GCC_VERSION': 'com.apple.compilers.llvm.clang.1_0',
-              'CLANG_CXX_LANGUAGE_STANDARD': 'c++11',  # -std=c++11
+              'CLANG_CXX_LANGUAGE_STANDARD': 'c++14',  # -std=c++11
             },
             'conditions': [
               ['clang_xcode==0', {
@@ -1179,6 +1179,7 @@
                 '<!(<(android_toolchain)/*-gcc -print-libgcc-file-name)',
                 '-lc',
                 '-ldl',
+                '-llog',
                 '-lm',
             ],
             'conditions': [
@@ -1288,6 +1289,7 @@
           }],  # _toolset=="target"
           # Settings for building host targets using the system toolchain.
           ['_toolset=="host"', {
+            'defines': [ 'V8_ANDROID_LOG_STDOUT=1' ],
             'cflags': [ '-pthread' ],
             'ldflags': [ '-pthread' ],
             'ldflags!': [
@@ -1323,7 +1325,7 @@
     ['clang==0 and host_clang==1 and target_arch!="ia32" and target_arch!="x64"', {
       'target_conditions': [
         ['_toolset=="host"', {
-          'cflags_cc': [ '-std=gnu++11', ],
+          'cflags_cc': [ '-std=c++11', ],
         }],
       ],
       'target_defaults': {
