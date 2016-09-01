@@ -91,6 +91,8 @@
 
     # Override where to find binutils
     'binutils_dir%': '',
+    
+    'android_stllib%': 'c++_static', #gnustl_static,gnustl_shared,c++_shared,stlport_shared..
 
     'conditions': [
       ['OS=="linux" and host_arch=="x64"', {

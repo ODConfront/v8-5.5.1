@@ -52,7 +52,7 @@ else
 endif
 
 # Common flags.
-DEFINES += OS=android
+DEFINES += OS=android android_stllib=c++static
 
 .SECONDEXPANSION:
 $(ANDROID_BUILDS): $(OUTDIR)/Makefile.$$@

@@ -209,6 +209,7 @@
     'fastbuild%': '<(fastbuild)',
     'coverage%': '<(coverage)',
     'sysroot%': '<(sysroot)',
+    'android_stllib%': '<(android_stllib)', #gnustl_static,gnustl_shared,c++_shared,stlport_shared..
     'icu_use_data_file_flag%': '<(icu_use_data_file_flag)',
 
     # Add a simple extras solely for the purpose of the cctests
@@ -322,12 +323,14 @@
             'android_ndk_version%': 'r11c',
             'host_os%': "<!(uname -s | sed -e 's/Linux/linux/;s/Darwin/mac/')",
             'os_folder_name%': "<!(uname -s | sed -e 's/Linux/linux/;s/Darwin/darwin/')",
-            'abi_arch':"armeabi",
+            'abi_arch%': 'armeabi',
+            'android_stllib%': '<(android_stllib)',
           },
 
           # Copy conditionally-set variables out one scope.
           'android_ndk_root%': '<(android_ndk_root)',
           'android_ndk_version%': '<(android_ndk_version)',
+          'android_stllib%': '<(android_stllib)',
           'host_os%': '<(host_os)',
           'os_folder_name%': '<(os_folder_name)',
 
@@ -397,10 +400,19 @@
               }, {
                 'android_lib': '<(android_sysroot)/usr/lib',
               }],
+              ['android_stllib == "c++_static"', {
+                'android_libcpp_include': '<(android_stl)/llvm-libc++/libcxx/include',
+                'android_libcpp_abi_include': '<(android_stl)/llvm-libc++abi/libcxxabi/include',
+                'android_libcpp_libs': '<(android_stl)/llvm-libc++/libs',
+                'android_libcpp_library': 'c++_static',
+              }, {
+                'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
+                'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/armeabi/include',
+                'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
+                'android_libcpp_support': 'supc++',
+                'android_libcpp_library': 'gnustl_static',
+              }],
             ],
-            'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
-            'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/<(abi_arch)/include',
-            'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
             'android_support_include': '<(android_toolchain)/sources/android/support/include',
             'android_sysroot': '<(android_sysroot)',
           }, {
@@ -414,16 +426,23 @@
               }, {
                 'android_lib': '<(android_sysroot)/usr/lib',
               }],
+              ['android_stllib=="c++_static"', {
+                'android_libcpp_include': '<(android_stl)/llvm-libc++/libcxx/include',
+                'android_libcpp_abi_include': '<(android_stl)/llvm-libc++abi/libcxxabi/include',
+                'android_libcpp_libs': '<(android_stl)/llvm-libc++/libs',
+                'android_libcpp_library': 'c++_static',
+              }, {
+                'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
+                'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/armeabi/include',
+                'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
+                'android_libcpp_support': 'supc++',
+                'android_libcpp_library': 'gnustl_static',
+              }],
             ],
-            'android_libcpp_include': '<(android_stl)/gnu-libstdc++/4.9/include',
-            'android_libcpp_abi_include': '<(android_stl)/gnu-libstdc++/4.9/libs/armeabi/include',
-            'android_libcpp_libs': '<(android_stl)/gnu-libstdc++/4.9/libs',
             'android_support_include': '<(android_ndk_root)/sources/android/support/include',
             'android_sysroot': '<(android_sysroot)',
           }],
         ],
-        'android_libcpp_library': 'gnustl_shared',
-        'android_libcpp_support': 'supc++',
       }],  # OS=="android"
       ['host_clang==1', {
         'conditions':[
@@ -1182,7 +1201,7 @@
               ],
               'libraries': [
                 '-l<(android_libcpp_library)',
-                '-l<(android_libcpp_support)',
+                #'-l<(android_libcpp_support)',
                 '-latomic',
                 # Manually link the libgcc.a that the cross compiler uses.
                 '<!(<(android_toolchain)/*-gcc -print-libgcc-file-name)',
