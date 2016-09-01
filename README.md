@@ -16,11 +16,13 @@ V8 Project page: https://github.com/v8/v8/wiki
 Getting The Dependencies
 =============
 
-Checkout [depot tools](http://www.chromium.org/developers/how-tos/install-depot-tools), and run
+Checkout [depot tools](http://www.chromium.org/developers/how-tos/install-depot-tools), 
 
-After adding depot_tools to System `PATH`, then rn
+After adding depot_tools to System `PATH`, then run
 
-        python download_deps.py
+```
+python download_deps.py
+```
 
 This will download all dependencies of V8 needed.
 
@@ -30,6 +32,7 @@ Build V8 With GN
 A **Linux build machine** capable of building V8 for Linux. Other (Mac/Windows) platforms are not supported for Android.
 
 First, generate the necessary build files:
+
 ```
 gn args out.gn/android
 ```
@@ -37,6 +40,17 @@ gn args out.gn/android
 
 ```
 gn gen out.gn/android --args='is_debug=false target_cpu="arm64" v8_target_cpu="arm64" target_os="android"'
+```
+
+```
+ninja -C out.gn/android v8
+```
+
+Build V8 With GYP
+============
+
+```
+make android_arm.release -j 16 android_ndk_root=....
 ```
 
 Contributing
