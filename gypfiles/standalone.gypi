@@ -1117,7 +1117,7 @@
           ['clang==1', {
             'xcode_settings': {
               'GCC_VERSION': 'com.apple.compilers.llvm.clang.1_0',
-              'CLANG_CXX_LANGUAGE_STANDARD': 'c++14',  # -std=c++11
+              'CLANG_CXX_LANGUAGE_STANDARD': 'c++11',  # -std=c++11
             },
             'conditions': [
               ['clang_xcode==0', {
@@ -1353,7 +1353,7 @@
     ['clang==0 and host_clang==1 and target_arch!="ia32" and target_arch!="x64"', {
       'target_conditions': [
         ['_toolset=="host"', {
-          'cflags_cc': [ '-std=c++11', ],
+          'cflags_cc': [ '-std=gnu++11', ],
         }],
       ],
       'target_defaults': {

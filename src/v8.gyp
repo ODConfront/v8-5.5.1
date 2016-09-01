@@ -2422,6 +2422,26 @@
           'toolsets': ['target'],
         }],
       ],
+    },{
+      'target_name': 'v8_rt',
+      'type': 'shared_library',
+      'dependencies': [ 'v8_libbase' ],
+      'include_dirs+': [
+        '..',
+       ],
+      'sources': [
+        'interpreter/bytecode-peephole-table.h',
+        'interpreter/bytecodes.h',
+        'interpreter/bytecodes.cc',
+        'interpreter/mkpeephole.cc'
+      ],
+      'conditions': [
+        ['want_separate_host_toolset_mkpeephole==1', {
+          'toolsets': ['host'],
+        }, {
+          'toolsets': ['target'],
+        }],
+      ],
     },
   ],
 }
