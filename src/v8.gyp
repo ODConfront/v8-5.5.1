@@ -382,7 +382,6 @@
     {
       'target_name': 'v8_base',
       'type': 'static_library',
-      'standalone_static_library': 1,
       'dependencies': [
         'v8_libbase',
         'v8_libsampler',
@@ -1739,7 +1738,6 @@
     {
       'target_name': 'v8_libbase',
       'type': 'static_library',
-      'standalone_static_library': 1,
       'variables': {
         'optimize': 'max',
       },
@@ -2024,7 +2022,6 @@
     {
       'target_name': 'v8_libplatform',
       'type': 'static_library',
-      'standalone_static_library': 1,
       'variables': {
         'optimize': 'max',
       },
@@ -2069,7 +2066,6 @@
     {
       'target_name': 'v8_libsampler',
       'type': 'static_library',
-      'standalone_static_library': 1,
       'variables': {
         'optimize': 'max',
       },
