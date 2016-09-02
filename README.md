@@ -50,7 +50,7 @@ Build V8 With GYP
 ============
 
 ```
-make android_arm.release -j 16 android_ndk_root=....
+make android_arm.release -j 16 android_ndk_root=... library=shared
 ```
 
 Contributing
