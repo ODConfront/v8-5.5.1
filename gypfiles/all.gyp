@@ -9,6 +9,9 @@
       'type': 'none',
       'dependencies': [
         '../src/d8.gyp:d8',
+        '../samples/samples.gyp:hello-world',
+        '../samples/samples.gyp:process',
+        '../samples/samples.gyp:v8rt',
       ],
       'conditions': [
         ['component!="shared_library"', {

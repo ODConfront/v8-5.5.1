@@ -79,5 +79,16 @@
         'process.cc',
       ],
     },
+    {
+      'target_name': 'v8rt',
+      'type': 'shared_library',
+      'defines': [
+        'V8_SHARED',
+        'BUILDING_V8_SHARED',
+      ],
+      'sources': [
+        '../src/v8dll-main.cc',
+      ],
+    }
   ],
 }
