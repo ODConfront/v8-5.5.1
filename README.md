@@ -13,7 +13,7 @@ V8 can run standalone, or can be embedded into any C++ application.
 V8 Project page: https://github.com/v8/v8/wiki
 
 
-Getting The Dependencies
+Get The Dependencies
 =============
 
 Checkout [depot tools](http://www.chromium.org/developers/how-tos/install-depot-tools), 
@@ -25,6 +25,14 @@ python download_deps.py
 ```
 
 This will download all dependencies of V8 needed.
+
+If you don't have CLANG installed on your PC, you should execute
+
+```
+python tools/clang/scripts/update.py --if-needed
+```
+
+On MacOS, you should make sure that `XCode Command Line Tools` is installed on your machine.
 
 Build V8 With GN
 ============
@@ -50,8 +58,9 @@ Build V8 With GYP
 ============
 
 ```
-make android_arm.release -j 16 android_ndk_root=... library=shared
+make android_arm.release -j 16 android_ndk_root=... 
 ```
+
 
 Contributing
 =============
